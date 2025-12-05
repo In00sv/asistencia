@@ -1,8 +1,14 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 
-# Modelo personalizado de usuario
+def validar_pdf(value):
+    if not value.name.endswith('.pdf'):
+        raise ValidationError("Solo se permiten documentos en formato PDF.")
+    if value.size > 5 * 1024 * 1024:  # 5MB
+        raise ValidationError("El archivo excede el tamaño máximo permitido (5MB).")
+
 class Usuario(AbstractUser):
     ROLES = [
         ('estudiante', 'Estudiante'),
@@ -16,7 +22,6 @@ class Usuario(AbstractUser):
         return f"{self.username} ({self.rol})"
 
 
-# Modelo de asistencia
 class Asistencia(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
@@ -37,7 +42,7 @@ class Justificacion(models.Model):
     fecha_inasistencia = models.DateField()
     motivo = models.CharField(max_length=200)
     descripcion = models.TextField(blank=True, null=True)
-    documento = models.FileField(upload_to='justificaciones/', blank=True, null=True)
+    documento = models.FileField(upload_to='justificaciones/', blank=True, null=True, validators=[validar_pdf])
     estado = models.CharField(max_length=10, choices=ESTADOS, default='pendiente')
     comentarios_validador = models.TextField(blank=True, null=True)
     fecha_envio = models.DateTimeField(auto_now_add=True)

@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'asistencia',
     'EVA',
+    
 ]
 AUTH_USER_MODEL = 'EVA.Usuario'
 
@@ -50,10 +51,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'asistencia.wsgi.application'
 
 # Base de datos local (puedes reemplazarla por la institucional)
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'eva',     # la BD que ves en phpMyAdmin
+        'USER': 'root',                  # usuario por defecto en XAMPP
+        'PASSWORD': '',                  # XAMPP NO tiene password por defecto
+        'HOST': '127.0.0.1',             # o 'localhost'
+        'PORT': '3306',                  # puerto de MySQL en XAMPP
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 

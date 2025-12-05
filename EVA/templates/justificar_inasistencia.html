@@ -1,10 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}JUSTIFICAR{% endblock %}
 
 {% block content %}
-<h2>Justificar Inasistencia</h2>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Enviar Justificación</button>
-</form>
-<a href="{% url 'historial_justificaciones' %}">Ver Historial</a>
+<div class="card shadow p-4">
+    <h2 class="mb-4">Justificar Inasistencia</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Enviar Justificación
+        </button>
+    </form>
+
+    <a href="{% url 'historial_justificaciones' %}" class="btn btn-link mt-3">
+        Ver Historial
+    </a>
+</div>
 {% endblock %}

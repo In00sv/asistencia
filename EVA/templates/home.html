@@ -1,10 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
 
 {% block content %}
-<h2>Bienvenido {{ user.username }}</h2>
+<div class="card shadow p-4">
+    <h2 class="mb-4">Bienvenido, {{ user.username }}</h2>
 
-<ul>
-  <li><a href="{% url 'justificar_inasistencia' %}">Justificar Inasistencia</a></li>
-  <li><a href="{% url 'historial_justificaciones' %}">Ver Historial</a></li>
-  <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
-</ul>
+    <div class="list-group">
+        <a href="{% url 'justificar_inasistencia' %}" class="list-group-item list-group-item-action">
+            Justificar Inasistencia
+        </a>
+
+        <a href="{% url 'historial_justificaciones' %}" class="list-group-item list-group-item-action">
+            Ver Historial
+        </a>
+
+        <a href="{% url 'logout' %}" class="list-group-item list-group-item-action text-danger">
+            Cerrar Sesión
+        </a>
+    </div>
+</div>
 {% endblock %}
